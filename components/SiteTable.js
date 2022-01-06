@@ -2,7 +2,6 @@ import React from 'react';
 import NextLink from 'next/link';
 import { Box, Link } from '@chakra-ui/react';
 import { parseISO, format } from 'date-fns';
-
 import { Table, Tr, Th, Td } from './Table';
 // import DeleteSiteButton from './DeleteSiteButton';
 
@@ -23,11 +22,7 @@ const SiteTable = ({ sites }) => {
           {sites.map((site, index) => (
             <Box as="tr" key={site.siteUrl}>
               <Td>
-                <NextLink
-                  href="/site/[siteId]"
-                  as={`/site/${site.id}`}
-                  passHref
-                >
+                <NextLink href="/p/[siteId]" as={`/p/${site.id}`} passHref>
                   <Link id={`site-table-link-${index}`} fontWeight="medium">
                     {site.siteName}
                   </Link>
@@ -39,20 +34,14 @@ const SiteTable = ({ sites }) => {
                 </Link>
               </Td>
               <Td>
-                <NextLink
-                  href="/site/[siteId]"
-                  as={`/site/${site.id}`}
-                  passHref
-                >
+                <NextLink href="/p/[siteId]" as={`/p/${site.id}`} passHref>
                   <Link color="blue.500" fontWeight="medium">
                     View Feedback
                   </Link>
                 </NextLink>
               </Td>
-              <Td>{format(parseISO(site.createdAt), 'PP')}</Td>
-              <Td>
-                {/* <DeleteSiteButton siteId={site.id} /> */}
-              </Td>
+              <Td>{format(parseISO(site.createdAt), 'PPp')}</Td>
+              <Td>{/* <DeleteSiteButton siteId={site.id} /> */}</Td>
             </Box>
           ))}
         </tbody>
