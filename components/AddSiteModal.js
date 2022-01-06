@@ -38,16 +38,23 @@ const AddSiteModal = ({ children }) => {
           siteName,
           siteUrl
         }
-        createSite(newSite, toast);
+        createSite(newSite);
+        toast({
+          title: 'Success!',
+          description: "We've added your site.",
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+      })
 
-        mutate('/api/sites', async (data) => {
-          return { sites: [...data.sites, newSite] }
-        }, false);
+      mutate('/api/sites', async (data) => {
+        return { sites: [...data.sites, newSite] }
+      }, false);
 
-        resetField('siteName');
-        resetField('siteUrl');
+      resetField('siteName');
+      resetField('siteUrl');
 
-        onClose();
+      onClose();
     }
  
     return (
