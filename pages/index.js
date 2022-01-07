@@ -1,5 +1,5 @@
-import Head from 'next/head'
-import Link from 'next/link'
+import Head from 'next/head';
+import Link from 'next/link';
 // import Image from 'next/image'
 import { useAuth } from '@/lib/auth';
 import { LogoIcon } from '@/styles/theme';
@@ -12,32 +12,62 @@ export default function Home() {
   return (
     <>
       <Head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if (document.cookie && document.cookie.includes('fast-feedback-auth')) {
+                window.location.href = "/dashboard"
+              }
+            `,
+          }}
+        />
         <title>Fast Feedback</title>
       </Head>
 
-      <Flex w="100%" align="center" justify="center" direction="column" h="100vh" >
+      <Flex
+        w="100%"
+        align="center"
+        justify="center"
+        direction="column"
+        h="100vh"
+      >
         <LogoIcon />
-        {
-          currentUser
-          ? <>
-              {/* <EmptyState /> */}
-              <Stack spacing={4} p="10">
-                <Text fontSize='xl' mb="4"><strong>Current User: </strong>{currentUser ? currentUser.email : null }</Text>
-                <Button colorScheme="red" variant="ghost" onClick={ (e) => logOut() }>Log Out</Button>
-                <Button variant="ghost" colorScheme="gray">
-                  <Link href="/dashboard">Go to dashboard</Link>
-                </Button>
-              </Stack>
-  
-            </>
-          :
-            <>
-              <Button backgroundColor="black" variant="ghost" color="white" mt={4} onClick={ (e) => signInWithGithub() }>Sign In With GitHub</Button>
-              {/* <button onClick={ (e) => signInWithGoogle() }>Sign In With Google</button>
+        {currentUser ? (
+          <>
+            {/* <EmptyState /> */}
+            <Stack spacing={4} p="10">
+              <Text fontSize="xl" mb="4">
+                <strong>Current User: </strong>
+                {currentUser ? currentUser.email : null}
+              </Text>
+              <Button
+                colorScheme="red"
+                variant="ghost"
+                onClick={(e) => logOut()}
+              >
+                Log Out
+              </Button>
+              <Button variant="ghost" colorScheme="gray">
+                <Link href="/dashboard">Go to dashboard</Link>
+              </Button>
+            </Stack>
+          </>
+        ) : (
+          <>
+            <Button
+              backgroundColor="black"
+              variant="ghost"
+              color="white"
+              mt={4}
+              onClick={(e) => signInWithGithub()}
+            >
+              Sign In With GitHub
+            </Button>
+            {/* <button onClick={ (e) => signInWithGoogle() }>Sign In With Google</button>
               <br /> */}
-            </>
-        }
+          </>
+        )}
       </Flex>
     </>
-  )
+  );
 }
