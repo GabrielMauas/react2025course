@@ -1,13 +1,13 @@
 import Head from 'next/head';
-import Link from 'next/link';
-// import Image from 'next/image'
+import NextLink from 'next/link';
+import { FaGithub, FaGoogle } from 'react-icons/fa';
+
 import { useAuth } from '@/lib/auth';
 import { LogoIcon } from '@/styles/theme';
-import { Button, Flex, Text, Stack } from '@chakra-ui/react';
-import EmptyState from '@/components/EmptyState';
+import { Button, Flex, Text, Stack, Link } from '@chakra-ui/react';
 
 export default function Home() {
-  const { currentUser, signInWithGithub, logOut } = useAuth();
+  const { currentUser, signInWithGithub, signInWithGoogle, logOut } = useAuth();
 
   return (
     <>
@@ -16,7 +16,7 @@ export default function Home() {
           dangerouslySetInnerHTML={{
             __html: `
               if (document.cookie && document.cookie.includes('fast-feedback-auth')) {
-                window.location.href = "/dashboard"
+                window.location.href = "/sites"
               }
             `,
           }}
@@ -36,9 +36,13 @@ export default function Home() {
           <>
             {/* <EmptyState /> */}
             <Stack spacing={4} p="10">
-              <Text fontSize="xl" mb="4">
+              <Text fontSize="xl" mb="2">
                 <strong>Current User: </strong>
-                {currentUser ? currentUser.email : null}
+                {currentUser ? currentUser.name : null}
+              </Text>
+              <Text fontSize="xl" mb="4">
+                <strong>Provider: </strong>
+                {currentUser ? currentUser.provider : null}
               </Text>
               <Button
                 colorScheme="red"
@@ -47,9 +51,13 @@ export default function Home() {
               >
                 Log Out
               </Button>
-              <Button variant="ghost" colorScheme="gray">
-                <Link href="/dashboard">Go to dashboard</Link>
-              </Button>
+              <NextLink href="/sites" passHref>
+                <Link textDecoration="none">
+                  <Button variant="ghost" colorScheme="gray" w="100%">
+                    Go to the Dashboard
+                  </Button>
+                </Link>
+              </NextLink>
             </Stack>
           </>
         ) : (
@@ -58,13 +66,28 @@ export default function Home() {
               backgroundColor="black"
               variant="ghost"
               color="white"
+              fontWeight="medium"
+              leftIcon={<FaGithub />}
               mt={4}
+              size="lg"
+              _hover={{ bgColor: 'gray.700', transform: 'scale(0.98)' }}
               onClick={(e) => signInWithGithub()}
             >
               Sign In With GitHub
             </Button>
-            {/* <button onClick={ (e) => signInWithGoogle() }>Sign In With Google</button>
-              <br /> */}
+            <Button
+              backgroundColor="white"
+              variant="outline"
+              color="gray.900"
+              fontWeight="medium"
+              leftIcon={<FaGoogle />}
+              mt={4}
+              size="lg"
+              _hover={{ bgColor: 'gray.300', transform: 'scale(0.98)' }}
+              onClick={(e) => signInWithGoogle()}
+            >
+              Sign In With Google
+            </Button>
           </>
         )}
       </Flex>
