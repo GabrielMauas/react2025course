@@ -1,5 +1,15 @@
 import { useRef, useState } from 'react';
-import { Box, FormControl, FormLabel, Input, Button } from '@chakra-ui/react';
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Stack,
+  IconButton,
+} from '@chakra-ui/react';
+import { ArrowBackIcon } from '@chakra-ui/icons';
+import Link from 'next/link';
 
 import { getAllFeedback, getAllSites } from '@/lib/db-admin';
 import { useAuth } from '@/lib/auth';
@@ -65,6 +75,11 @@ const SiteFeedback = ({ initialFeedback }) => {
       display="flex"
       flexDirection="column"
     >
+      <Stack isInline mt={4}>
+        <Link href="/sites" passHref>
+          <IconButton icon={<ArrowBackIcon />} fontWeight="bold" />
+        </Link>
+      </Stack>
       <FormControl as="form" onSubmit={onSubmit} my={8}>
         <FormLabel htmlFor="comment">Comment</FormLabel>
         <Input ref={inputEl} id="comment" type="comment" />

@@ -3,11 +3,10 @@ import NextLink from 'next/link';
 import { Box, Link } from '@chakra-ui/react';
 import { parseISO, format } from 'date-fns';
 import { Table, Tr, Th, Td } from './Table';
-// import DeleteSiteButton from './DeleteSiteButton';
 
 const SiteTable = ({ sites }) => {
   return (
-    <Box overflowX="scroll">
+    <Box>
       <Table w="full">
         <thead>
           <Tr>
